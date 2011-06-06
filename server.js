@@ -5,11 +5,10 @@ var http        = require('http'),
     nodeStatic  = require('node-static/lib/node-static');
 
 var server = http.createServer(function(request, response) {
+  var file = new nodeStatic.Server('./public', {
+    cache: false
+  });
   request.addListener('end', function() {
-    response.writeHead(200, {
-      'Content-Type': 'text/plain'
-    });
-    response.write(sys.inspect(request));
-    response.end();
+    file.serve(request,response);
   });
 }).listen(8000);
